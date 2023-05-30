@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import com.wasee292.wlinker.legacy.databinding.DialogFragmentAddTagBinding
 import com.wasee292.wlinker.legacy.db.entity.Tag
+import com.wasee292.wlinker.legacy.shortToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -53,15 +53,21 @@ class AddTagFragment : DialogFragment() {
 
     private fun observeEvents() {
         addTagViewModel.events.observe(this@AddTagFragment) { addTagEvent ->
-            when (addTagEvent) {
-                is AddTagEvent.TagAdded -> {
-                    dismiss()
-                }
+			when (addTagEvent) {
+				is AddTagEvent.TagAdded -> {
+					dismiss()
+				}
 
-                else -> {
-                    // do nothing
-                }
-            }
+				is AddTagEvent.TagAlreadyExists -> {
+					val existingTag = addTagEvent.tag.value
+					shortToast { "$existingTag already exists!" }
+					dismiss()
+				}
+
+				else -> {
+					// do nothing
+				}
+			}
         }
     }
 
