@@ -45,7 +45,7 @@ class AddTagFragment : DialogFragment() {
                 if (tag.isNotEmpty()) {
                     addTagViewModel.addTag(Tag(tag))
                 } else {
-                    Toast.makeText(requireContext(), "please enter tag", Toast.LENGTH_SHORT).show()
+					shortToast { "please enter tag" }
                 }
             }
         }

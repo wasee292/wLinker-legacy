@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +11,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.wasee292.wlinker.legacy.addtag.AddTagFragment
 import com.wasee292.wlinker.legacy.databinding.BottomSheetDialogFragmentAddLinkBinding
 import com.wasee292.wlinker.legacy.db.entity.Link
+import com.wasee292.wlinker.legacy.shortToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -57,16 +57,14 @@ class AddLinkFragment : BottomSheetDialogFragment() {
                         )
                     )
                 } else {
-                    Toast.makeText(
-                        requireContext(),
-                        if (link.isEmpty()) {
-                            "please enter link"
-                        } else {
-                            "please select tags"
-                        },
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+					shortToast {
+						if (link.isEmpty()) {
+							"please enter link"
+						} else {
+							"please select tags"
+						}
+					}
+				}
             }
             rvSelectTag.layoutManager = LinearLayoutManager(requireContext())
             rvSelectTag.adapter = selectableTagsAdapter
