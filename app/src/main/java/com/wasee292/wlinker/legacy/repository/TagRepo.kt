@@ -10,4 +10,8 @@ class TagRepo(
     fun getTags() = tagDao.getAllTags().subscribeOn(Schedulers.io())
 
     fun addTag(tag: Tag) = tagDao.addTag(tag).subscribeOn(Schedulers.io())
+
+	fun tagExists(value: String) = tagDao.searchTag(value)
+		.map { it.isNotEmpty() }
+		.subscribeOn(Schedulers.io())
 }
